@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Characters>
+    <Character Name="Zavala">
+        <OtherNames>
+            <Name>Vanguard Tactical</Name>
+            <Name>Big Blue</Name>
+            <Name GivenBy="Asher Mir">Vuvuzela</Name>
+            <Name GivenBy="Drifter">Cue Ball</Name>
+            <Name>Zavalakel</Name>
+        </OtherNames>
+        <Characteristics Species="Human" Race="Awoken" Gender="Male" HairColor="None" EyeColor="SkyBlue"/>
+        <Affiliations>
+            <Affiliation>Vanguard</Affiliation>
+        </Affiliations>
+        <Powers>
+            <Paracausal>
+                <Light>
+                    <GuardianPowers>Ghost Revival</GuardianPowers>
+                    <GuardianPowers>Ghost Recovery</GuardianPowers>
+                    <GuardianPowers>Immortality</GuardianPowers>
+                    <GuardianSubclass>Sentinel</GuardianSubclass>
+                    <GuardianSubclass>Striker</GuardianSubclass>
+                </Light>
+                <Dark>
+                    <GuardianSubclass>Behemoth</GuardianSubclass>
+                </Dark>
+            </Paracausal>
+        </Powers>
+        <Lore>
+        </Lore>
+    </Character>
+</Characters>
