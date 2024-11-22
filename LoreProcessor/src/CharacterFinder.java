@@ -1,5 +1,4 @@
 import java.io.File;
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
@@ -7,69 +6,48 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.*;
 
-
 public class CharacterFinder
 {
     final String CharacterXmlDestination = System.getProperty("user.dir") + "\\LoreRefs\\Characters.xml";
     Document doc = null;
 
-    public CharacterFinder()
-    {
-        try
-        {
+    public CharacterFinder() {
+        try {
             File CharacterFile = new File(CharacterXmlDestination);
             Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(CharacterFile);
-
             // Normalize the document
             doc.getDocumentElement().normalize();
             removeWhitespaceNodes(doc.getDocumentElement());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        } catch (Exception e) { throw new RuntimeException(e); }
     }
-    public void Update()
-    {
-        try
-        {
+    public void Update() {
+        try {
             // Write the updated XML back to the file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "1"); // Set indentation amount
             transformer.transform(new DOMSource(doc), new StreamResult(new File(CharacterXmlDestination)));
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
+        } catch (Exception e) { throw new RuntimeException(e); }
     }
 
     private static void removeWhitespaceNodes(Node node) {
         NodeList children = node.getChildNodes();
         for (int i = children.getLength() - 1; i >= 0; i--) {
             Node child = children.item(i);
-            if (child.getNodeType() == Node.TEXT_NODE && child.getNodeValue().trim().isEmpty())
-            {
-                node.removeChild(child);
-            }
-            else if (child.hasChildNodes())
-            {
-                removeWhitespaceNodes(child);
-            }
+            if (child.getNodeType() == Node.TEXT_NODE && child.getNodeValue().trim().isEmpty()) node.removeChild(child);
+            else if (child.hasChildNodes()) removeWhitespaceNodes(child);
         }
     }
 
-    public void AddCharacter(Character character)
-    {
+    public void AddCharacter(Character character) {
         Element newCharacter = doc.createElement("Character");
         newCharacter.setAttribute("Name", character.getName());
 
         // Add <OtherNames>
         Element otherNames = doc.createElement("OtherNames");
 
-        int i = 1;
-        for(String name : character.getNames())
-        {
+        for(String name : character.getNames()) {
             if(name.compareTo(character.getName()) == 0) continue;
             Element element = doc.createElement("Name");
             element.setTextContent(name);
@@ -89,8 +67,7 @@ public class CharacterFinder
 
         // Add <Affiliations>
         Element affiliations = doc.createElement("Affiliations");
-        for(String aff : character.getAffiliation())
-        {
+        for(String aff : character.getAffiliation()) {
             Element affiliation = doc.createElement("Affiliation");
             affiliation.setTextContent(aff);
             affiliations.appendChild(affiliation);
@@ -114,28 +91,7 @@ public class CharacterFinder
     }
 
     public Character LoadCharacter(String Name) {
-        try
-        {
-            File CharacterFile = new File(CharacterXmlDestination);
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder;
-            builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(CharacterFile);
-
-            doc.getDocumentElement().normalize();
-            Element root = doc.getDocumentElement();
-            NodeList nodes = root.getChildNodes();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        return null;
+        return new Character(Name);
     }
-
-    public void UpdateCharacter(Character character) {
-
-    }
-
 
 }

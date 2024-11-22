@@ -20,6 +20,23 @@ public class Character
         this.OtherNames = new ArrayList<>(List.of(OtherNames));
     }
 
+    public void preset(String preset)
+    {
+        switch (preset) {
+            case "Guardian":
+                AddAffiliation("Vanguard");
+            case "Lightbearer":
+                AddPower("Ghost Revival");
+                AddPower("Ghost Recovery");
+                AddPower("Immortality");
+                break;
+            case "Ahamkara":
+                break;
+            default:
+                System.out.println("Unknown preset: " + preset);
+        }
+    }
+
     public String getName() { return Name; }
     public String[] getNames() {
         String[] result = new String[OtherNames.size() + 1];
